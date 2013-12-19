@@ -16,6 +16,7 @@ settingspath = os.path.join(apppath, "settings.config")
 # Not sure why we have to set these here but GDAL doesn't like it if we
 # don't
 os.environ['PATH'] += ";{}".format(os.path.join(apppath, 'libs'))
+os.environ["GDAL_DATA"] = os.path.join(apppath, "libs", "gdal")
 os.environ["GDAL_DRIVER_PATH"] = os.path.join(apppath, 'libs')
 
 if RUNNING_FROM_FILE:

@@ -15,11 +15,13 @@ import os
 import roam
 
 osgeopath = r'C:\OSGeo4W'
+osgeoshare = os.path.join(osgeopath, "share")
 osgeobin = os.path.join(osgeopath, 'bin')
+qgispath = os.path.join(osgeopath, r'apps\qgis')
 qtimageforms = os.path.join(osgeopath,r'apps\qt4\plugins\imageformats\*')
-qgisresources = os.path.join(osgeopath, "apps", "qgis", "resources")
-svgs = os.path.join(osgeopath, "apps", "qgis", "svg")
-qgispluginpath = os.path.join(osgeopath, r'apps\qgis\plugins\*provider.dll' )
+qgisresources = os.path.join(qgispath, 'resources')
+svgs = os.path.join(qgispath, 'svg')
+qgispluginpath = os.path.join(qgispath, r'plugins\*provider.dll' )
 
 def svgfiles():
     for path, dirs, files in os.walk(svgs):
@@ -46,6 +48,7 @@ datafiles = [(".", [r'src\settings.config',
             (r'libs\qgis\plugins', glob.glob(qgispluginpath)),
             (r'libs\qgis\resources', [os.path.join(qgisresources, 'qgis.db'),
                                  os.path.join(qgisresources, 'srs.db')]),
+            (r'libs\gdal', glob.glob(os.path.join(osgeoshare, "gdal\*.*"))),
             (r'libs', ecwfiles)]
 
 for path, collection in svgfiles():
