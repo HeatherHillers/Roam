@@ -307,47 +307,6 @@ QToolButton:checked {
    <addaction name="actionSettings"/>
    <addaction name="actionQuit"/>
   </widget>
-  <widget class="QToolBar" name="projecttoolbar">
-   <property name="contextMenuPolicy">
-    <enum>Qt::PreventContextMenu</enum>
-   </property>
-   <property name="windowTitle">
-    <string>projecttoolbar</string>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QToolBar {
-	background: none;
-}</string>
-   </property>
-   <property name="movable">
-    <bool>false</bool>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>48</width>
-     <height>48</height>
-    </size>
-   </property>
-   <property name="toolButtonStyle">
-    <enum>Qt::ToolButtonTextUnderIcon</enum>
-   </property>
-   <property name="floatable">
-    <bool>false</bool>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-   <addaction name="actionHome"/>
-   <addaction name="actionPan"/>
-   <addaction name="actionZoom_In"/>
-   <addaction name="actionZoom_Out"/>
-   <addaction name="actionRaster"/>
-   <addaction name="actionInfo"/>
-   <addaction name="separator"/>
-  </widget>
   <action name="actionMap">
    <property name="checkable">
     <bool>true</bool>

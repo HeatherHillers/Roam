@@ -55,6 +55,7 @@ from roam.helpviewdialog import HelpPage
 
 import roam.messagebaritems
 import roam.utils
+import roam.gui
 
 
 class BadLayerHandler(QgsProjectBadLayerHandler):
@@ -93,6 +94,15 @@ class MainWindow(mainwindow_widget, mainwindow_base):
         self.canvas.enableAntiAliasing(True)
         self.canvas.setWheelAction(QgsMapCanvas.WheelZoomToMouseCursor)
         self.bar = roam.messagebaritems.MessageBar(self)
+
+        self.projecttoolbar = roam.gui.ProjectToolbar(self.canvas)
+        self.projecttoolbar.setIconSize(QSize(48,48))
+        self.projecttoolbar.addAction(self.actionHome)
+        self.projecttoolbar.addAction(self.actionRaster)
+        self.projecttoolbar.addAction(self.actionPan)
+        self.projecttoolbar.addAction(self.actionZoom_In)
+        self.projecttoolbar.addAction(self.actionZoom_Out)
+        self.projecttoolbar.addAction(self.actionInfo)
 
         self.actionMap.setVisible(False)
 
@@ -210,7 +220,6 @@ class MainWindow(mainwindow_widget, mainwindow_base):
         self.band.setWidth(10)
         self.band.setColor(QColor(186, 93, 212, 76))
 
-        self.canvas_page.layout().insertWidget(0, self.projecttoolbar)
         self.dataentrymodel = QStandardItemModel(self)
         self.dataentrycombo = QComboBox(self.projecttoolbar)
         self.dataentrycombo.setIconSize(QSize(48,48))
