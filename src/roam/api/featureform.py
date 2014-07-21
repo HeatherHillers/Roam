@@ -8,7 +8,7 @@ import json
 from functools import partial
 
 from PyQt4 import uic
-from PyQt4.QtCore import pyqtSignal, QObject, QSize, QEvent, QProcess, Qt, QRegExp
+from PyQt4.QtCore import pyqtSignal, QObject, QSize, QEvent, QProcess, Qt, QPyNullVariant, QRegExp
 from PyQt4.QtGui import (QWidget,
                          QDialogButtonBox,
                          QStatusBar,

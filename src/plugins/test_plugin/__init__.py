@@ -1,6 +1,6 @@
 from PyQt4.QtGui import QWidget, QGridLayout, QLabel, QIcon
 
-from roam.api import plugins
+from roam.api import plugins, RoamEvents
 
 __author__ = 'Test User'
 __description__ = "Report plugin to generate simple reports in the field"
@@ -13,7 +13,7 @@ class ReportPage(QWidget):
         self.setLayout(QGridLayout())
         self.label = QLabel()
         self.layout().addWidget(self.label)
-        api.events.RoamEvents.selectionchanged.connect(self.selection_updated)
+        RoamEvents.selectionchanged.connect(self.selection_updated)
 
     def selection_updated(self, selection):
         text = ''

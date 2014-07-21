@@ -358,6 +358,7 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
         self.showdataentry()
         self.dataentrywidget.load_feature_form(feature, form, editmode, *args)
 
+    def editfeaturegeometry(self, form, feature, newgeometry):
         layer = form.QGISLayer
         layer.startEditing()
         feature.setGeometry(newgeometry)
@@ -504,7 +505,6 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
             self.mainwindow.addDockWidget(Qt.BottomDockWidgetArea, panel)
             self.panels.append(panel)
 
-        self.infoTool.selectionlayers = self.project.selectlayersmapping()
         self.actionPan.trigger()
 
         try:

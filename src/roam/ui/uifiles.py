@@ -22,3 +22,4 @@ dataentry_widget, dataentry_base = ui_dataentrywidget.Ui_Form, QWidget
 featurefeature_dialog = ui_deletefeature.Ui_DeleteFeatureDialog
 imageviewer_widget, imageviewer_base = ui_imageviewer.Ui_imageviewer, QWidget
 actionpicker_widget, actionpicker_base = ui_actionpicker.Ui_ActionPickerDialog, QDialog
+legend_widget, legend_base = ui_legend.Ui_legendsWidget, QWidget
