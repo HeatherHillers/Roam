@@ -42,6 +42,10 @@ class _Events(QObject):
 
     onShowMessage = pyqtSignal(str, str, int, int, str)
 
+    projectloaded = pyqtSignal(object)
+
+    showmap = pyqtSignal(object)
+
     featuresaved = pyqtSignal()
 
     def raisemessage(self, title, message, level=0, duration=0, extra=''):

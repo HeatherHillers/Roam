@@ -90,6 +90,7 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
         super(MainWindow, self).__init__()
         self.setupUi(self)
         self.menutoolbar.setStyleSheet(roam.roam_style.menubarstyle)
+        self.projectbuttons = []
         self.project = None
         self.tracking = GPSLogging(GPS)
 
@@ -115,7 +116,9 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
         self.menuGroup.triggered.connect(self.updatePage)
 
         self.actionQuit.triggered.connect(self.exit)
-        self.actionLegend.triggered.connect(self.updatelegend)
+
+        self.projectbuttons.append(self.actionMap)
+        self.projectbuttons.append(self.actionLegend)
 
         self.projectwidget.requestOpenProject.connect(self.loadProject)
         QgsProject.instance().readProject.connect(self._readProject)
@@ -175,7 +178,7 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
         self.statusbar.addWidget(self.gpslabel)
 
         self.menutoolbar.insertWidget(self.actionQuit, sidespacewidget2)
-        self.menutoolbar.insertWidget(self.actionProject, sidespacewidget)
+        self.spaceraction = self.menutoolbar.insertWidget(self.actionProject, sidespacewidget)
 
         self.panels = []
 
@@ -196,12 +199,10 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
         RoamEvents.editgeometry_complete.connect(self.on_geometryedit)
         RoamEvents.onShowMessage.connect(self.showUIMessage)
         RoamEvents.selectionchanged.connect(self.showInfoResults)
-        RoamEvents.show_widget.connect(self.dataentrywidget.add_widget)
+        RoamEvents.showmap.connect(self.showmap)
 
         GPS.gpsposition.connect(self.update_gps_label)
         GPS.gpsdisconnected.connect(self.gps_disconnected)
-
-        self.legendpage.showmap.connect(self.showmap)
 
         self.currentselection = {}
 
@@ -211,8 +212,6 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
         roam.utils.info(message)
         roam.utils.info(extra)
 
-    def updatelegend(self):
-        self.legendpage.updatecanvas(self.canvas)
 
     def update_gps_label(self, position, gpsinfo):
         # Recenter map if we go outside of the 95% of the area
@@ -298,9 +297,14 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
     def highlightfeature(self, layer, feature, features):
         self.canvas_page.highlight_active_selection(layer, feature, features)
 
+    def setprojectbuttonstate(self, visible):
+        for button in self.projectbuttons:
+            button.setVisible(visible)
+
+        self.actionMap.setVisible(visible)
+        self.actionLegend.setVisible(visible)
+
     def showmap(self):
-        self.actionMap.setVisible(True)
-        self.actionLegend.setVisible(True)
         self.actionMap.trigger()
 
     def hidedataentry(self):
@@ -442,6 +446,38 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
     def viewprojects(self):
         self.stackedWidget.setCurrentIndex(1)
 
+    def loadpages(self, pages):
+        for page, config in pages.iteritems():
+            action = QAction(self.menutoolbar)
+            action.setCheckable(True)
+            text = config['title'].ljust(13)
+            action.setIconText(text)
+            action.setIcon(config['icon'])
+            if config['projectpage']:
+                action.setVisible(False)
+                self.projectbuttons.append(action)
+                self.menutoolbar.insertAction(self.spaceraction, action)
+            else:
+                self.menutoolbar.insertAction(self.actionProject, action)
+
+            PageClass = config['widget']
+
+            class RoamInterface(object):
+                def __init__(self):
+                    self.events = RoamEvents
+                    self.gps = GPS
+                    self.canvas = None
+
+            iface = RoamInterface()
+            iface.canvas = self.canvas
+
+            pagewidget = PageClass(iface, self)
+            pageindex = self.stackedWidget.insertWidget(-1, pagewidget)
+            action.setProperty('page', pageindex)
+
+            self.menuGroup.addAction(action)
+            print page, config
+
     @roam.utils.timeit
     def _readProject(self, doc):
         """
@@ -466,8 +502,7 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
             self.mainwindow.addDockWidget(Qt.BottomDockWidgetArea, panel)
             self.panels.append(panel)
 
-        layers = self.project.legendlayersmapping().values()
-        self.legendpage.updateitems(layers)
+        self.actionPan.trigger()
 
         try:
             gps_loglayer = QgsMapLayerRegistry.instance().mapLayersByName('gps_log')[0]
@@ -480,6 +515,10 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
         self.canvas_page.project_loaded(self.project)
         self.showmap()
 
+        self.setprojectbuttonstate(True)
+        RoamEvents.projectloaded.emit(self.project)
+
+    #noinspection PyArgumentList
     @roam.utils.timeit
     def loadProject(self, project):
         """
