@@ -203,3 +203,4 @@ if os.name is 'nt':
         windows=[roam_target, configmanager_target],
         zipfile="libs\\"
         )
+setup(**package_details)
