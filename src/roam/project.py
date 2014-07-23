@@ -17,7 +17,7 @@ from qgis.core import QgsMapLayerRegistry, QGis, QgsTolerance, QgsVectorLayer, Q
 
 from roam.utils import log, debug
 from roam.syncing import replication
-from roam.api import FeatureForm
+from roam.api import FeatureForm, plugins
 from roam.structs import OrderedDictYAMLLoader
 from roam.dataaccess.database import Database
 from roam.structs import CaseInsensitiveDict
@@ -643,4 +643,13 @@ class Project(object):
             if layer in layers:
                 return True
         return False
+
+    def getPlugins(self):
+        filteredplugins={}
+        configuredplugins = self.settings.get("plugins", [])
+        configuredplugins.append("Legend")
+        for page, config in plugins.registeredpages.iteritems():
+            if page in configuredplugins:
+                filteredplugins[page] = config
+        return filteredplugins
 
