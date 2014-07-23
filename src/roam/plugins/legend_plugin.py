@@ -1,6 +1,6 @@
 import math
 from PyQt4.QtCore import Qt, QSize, QRect, QPoint, pyqtSignal, QRectF
-from PyQt4.QtGui import  QIcon, QWidget, QPixmap, QPainter, QLabel, QBrush, QColor, QPen, QTextOption, QFontMetrics
+from PyQt4.QtGui import  QImage, QIcon, QWidget, QPixmap, QPainter, QLabel, QBrush, QColor, QPen, QTextOption, QFontMetrics
 
 from qgis.core import QgsMapLayer, QGis
 
