@@ -484,7 +484,7 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
         for a in self.projectbuttons:
             if a not in centralPages:
                 self.menutoolbar.removeAction(a)
-            self.projectbuttons.remove(a)
+                self.projectbuttons.remove(a)
         self.setprojectbuttonstate(False)
 
 
@@ -521,7 +521,7 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
         except IndexError:
             roam.utils.info("No gps_log found for GPS logging")
             self.tracking.clear_logging()
-            
+        
         # Load Plugin pages selected by project config
         projectplugins = self.project.getPlugins()
         self.loadpages(projectplugins)
