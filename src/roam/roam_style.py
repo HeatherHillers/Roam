@@ -94,7 +94,8 @@ QPushButton {
 }
 
 QPushButton:checked  {
-	background-color: rgb(203, 203, 203);
+    border: 3px solid rgb(137, 175, 255);
+    background-color: rgb(211, 228, 255);
 }
 
 QPushButton:hover {
@@ -168,5 +169,33 @@ featureform = """
 * {
     font: 20px "Segoe UI" ;
 }
+
+QPushButton {
+    border: 1px solid rgb(137, 175, 255);
+	background-color: rgb(203, 203, 203, 50);
+    padding: 6px;
+    color: #4f4f4f;
+}
+
+QPushButton:checked  {
+    border: 3px solid rgb(137, 175, 255);
+    background-color: rgb(211, 228, 255);
+}
+
+QPushButton:hover {
+    background-color: rgb(211, 228, 255);
+}
+
+QToolButton {
+    border: 1px solid #e1e1e1;
+    padding: 6px;
+    color: #4f4f4f;
+}
+
+QToolButton:checked  {
+    border: 3px solid rgb(137, 175, 255);
+    background-color: rgb(211, 228, 255);
+}
+
 """
 
