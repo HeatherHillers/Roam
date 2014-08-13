@@ -28,7 +28,6 @@ with roam.environ.setup() as roamapp:
     pluginspaths = [os.path.join(roamapp.apppath, 'plugins'),\
                     os.path.join(roamapp.apppath, 'roam', 'plugins')]
 
-    print pluginspaths
     roam.api.plugins.load_plugins_from(pluginspaths)
 
     roamapp.setActiveWindow(window)
@@ -39,6 +38,5 @@ with roam.environ.setup() as roamapp:
     window.loadprojects(projects)
     window.actionProject.toggle()
     window.viewprojects()
-    window.loadpages(roam.api.plugins.registeredpages)
     window.show()
 

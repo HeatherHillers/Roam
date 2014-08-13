@@ -497,6 +497,8 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
         crs = self.canvas_page.init_qgisproject(doc)
         self.projectOpened()
         GPS.crs = crs
+        self.canvas.freeze(False)
+        self.canvas.refresh()
 
     @roam.utils.timeit
     def projectOpened(self):
