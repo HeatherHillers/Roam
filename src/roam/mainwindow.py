@@ -6,7 +6,6 @@ import traceback
 import os
 import sys
 
-
 from PyQt4.QtCore import Qt, QFileInfo, QDir, QSize
 from PyQt4.QtGui import (QActionGroup,
                         QApplication,
@@ -481,10 +480,14 @@ class MainWindow(ui_mainwindow.Ui_MainWindow, QMainWindow):
         mode or just maximized
         """
         fullscreen = roam.config.settings.get("fullscreen", False)
+        lowres = roam.config.settings.get("lowres", False)
         if fullscreen:
             self.showFullScreen()
+        elif lowres:
+            self.setFixedSize(950, 600)
+            self.showNormal()
         else:
-            self.showMaximized()
+            self.showNormal()
 
     def viewprojects(self):
         self.stackedWidget.setCurrentIndex(1)
