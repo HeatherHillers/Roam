@@ -1,4 +1,4 @@
-import imp
+from importlib.machinery import SourceFileLoader
 import os
 
 from qgis.PyQt.QtCore import pyqtSignal, QProcess, QObject, QProcessEnvironment
@@ -60,10 +60,12 @@ class BatchFileSync(SyncProvider):
         self.haserror = False
 
     def import_parser_module(self):
-        import imp
+        import importlib
         name = self.parser
-        module = imp.find_module(name, [self.rootfolder])
-        module = imp.load_module(name, *module)
+        spec = importlib.machinery.PathFinder.find_spec(name, [self.rootfolder])
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        sys.modules[name] = module
         self.parsermodule = module
         print(self.parsermodule)
 
