@@ -76,7 +76,7 @@ class WidgetsModel(QStandardItemModel):
     def dropMimeData(self, mimedata, action, row, column, parent):
         data = mimedata.data(self.mimeTypes()[0]).data()
         data = data.decode("utf-8")
-        widgets = yaml.load(data)
+        widgets = yaml.safe_load(data)
 
         droptarget = self.itemFromIndex(parent)
         if not droptarget:

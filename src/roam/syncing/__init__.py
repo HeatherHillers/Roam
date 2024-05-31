@@ -6,7 +6,7 @@ import roam.config
 def load(path):
     try:
         with open(path, 'r') as f:
-            settings = yaml.load(f)
+            settings = yaml.safe_load(f)
             if settings is None:
                 settings = {}
             return settings

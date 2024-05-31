@@ -38,10 +38,11 @@ def read_qsize(key):
 
 
 def load(path):
+    
     with open(path, 'r') as f:
         global settings
         try:
-            settings = yaml.load(f)
+            settings = yaml.safe_load(f)
         except ReaderError:
             settings = {}
         if settings is None:
@@ -90,7 +91,7 @@ def readfolderconfig(folder, configname):
     try:
         with open(settingspath, 'r') as f:
             try:
-                settings = yaml.load(f) or {}
+                settings = yaml.safe_load(f) or {}
             except ScannerError as ex:
                 raise ConfigLoadError(str(ex))
         return settings

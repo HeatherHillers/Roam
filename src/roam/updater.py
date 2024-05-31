@@ -43,7 +43,7 @@ def parse_serverprojects(configdata):
         return {}
 
     if isinstance(configdata, bytes):
-        configdata = yaml.load(configdata)
+        configdata = yaml.safe_load(configdata)
 
     versions = defaultdict(dict)
     datadate = configdata.get('data_date', None)
