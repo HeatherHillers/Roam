@@ -1,6 +1,7 @@
 import yaml
 import yaml.constructor
-from collections import OrderedDict, MutableMapping
+from collections import OrderedDict
+from collections.abc import MutableMapping
 
 
 class OrderedDictYAMLLoader(yaml.Loader):
@@ -47,7 +48,7 @@ class CaseInsensitiveDict(MutableMapping):
     """
     A case-insensitive ``dict``-like object.
     Implements all methods and operations of
-    ``collections.MutableMapping`` as well as dict's ``copy``. Also
+    ``collections.abc.MutableMapping`` as well as dict's ``copy``. Also
     provides ``lower_items``.
     All keys are expected to be strings. The structure remembers the
     case of the last key to be set, and ``iter(instance)``,
